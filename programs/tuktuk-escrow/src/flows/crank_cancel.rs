@@ -8,6 +8,8 @@ use crate::models::EscrowOffer;
 #[derive(Accounts)]
 pub struct CrankCancelEscrowFlow<'info> {
     #[account(mut)]
+    /// CHECK: Validated by escrow PDA constraints (`has_one = maker`) and only
+    /// used as refund destination in this instruction.
     maker: AccountInfo<'info>,
     mint_a: InterfaceAccount<'info, Mint>,
     #[account(

@@ -1,5 +1,5 @@
 use anchor_lang::solana_program::instruction::Instruction;
-use anchor_lang::{prelude::*, InstructionData};
+use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 use tuktuk_program::{
     compile_transaction,
@@ -42,15 +42,19 @@ pub struct QueueCancelEscrowFlow<'info> {
     vault: InterfaceAccount<'info, TokenAccount>,
 
     #[account(mut)]
+    /// CHECK: Validated by the tuktuk program during `queue_task_v0` CPI.
     pub task_queue: UncheckedAccount<'info>,
+    /// CHECK: Validated by the tuktuk program during `queue_task_v0` CPI.
     pub task_queue_authority: UncheckedAccount<'info>,
     #[account(mut)]
+    /// CHECK: Created/validated by the tuktuk program during `queue_task_v0` CPI.
     pub task: UncheckedAccount<'info>,
     #[account(
         mut,
         seeds = [b"queue_authority"],
         bump
     )]
+    /// CHECK: PDA is constrained by seeds+bump and only used as a CPI signer.
     pub queue_authority: AccountInfo<'info>,
 
     pub system_program: Program<'info, System>,
@@ -72,7 +76,7 @@ impl<'info> QueueCancelEscrowFlow<'info> {
                     AccountMeta::new_readonly(self.token_program.key(), false),
                     AccountMeta::new_readonly(self.system_program.key(), false),
                 ],
-                data: crate::instruction::AutoRefund {}.data(),
+                data: anchor_lang::solana_program::hash::hash(b"global:auto_refund").to_bytes()[..8].to_vec(),
             }],
             vec![],
         )

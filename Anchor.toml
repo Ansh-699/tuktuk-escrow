@@ -9,11 +9,14 @@ skip-lint = false
 [programs.devnet]
 tuktuk_escrow = "8PFxoRZxSAmtbq2fUw3ok9Agtcs89Zywbihtsz4wSUtL"
 
+[programs.localnet]
+tuktuk_escrow = "8PFxoRZxSAmtbq2fUw3ok9Agtcs89Zywbihtsz4wSUtL"
+
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
