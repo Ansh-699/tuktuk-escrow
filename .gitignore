@@ -1,0 +1,15 @@
+target/
+.anchor
+Cargo.lock
+node_modules/
+dist/
+build/
+.yarn
+test-ledger/
+**/*.rs.bk
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idl/
+
